@@ -26,12 +26,11 @@ Running IBController
 	c:\unzip path\>IbExtract.exe
 
 	1. Writes out a list of exchanges to:
-      ..\output\exchanges.txt
+      c:\unzip path\exchanges.txt
 
 	2.  Writes a list of contract id's and details to:
-     ..\output\contracts.txt
+      c:\unzip path\contracts.txt
 
-	
 Building IBController
 -----------------------------
 
