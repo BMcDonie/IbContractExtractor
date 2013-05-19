@@ -37,6 +37,9 @@ namespace IbContractExtractor
         private static bool complete;
         private static HtmlDocument doc;
 
+        public Contract()
+        { }
+
         public Contract(HtmlNode link, Exchange exchange)
         {
             ContractId = Regex.Match(link.ChildNodes[3].InnerHtml,"conid=(.*?)'").Groups[1].Value;
@@ -113,5 +116,30 @@ namespace IbContractExtractor
             string mainUrl = "http://www.interactivebrokers.com/en/trading/exchanges.php?exch={0}&showcategories={1}&showproducts=&sequence_idx={2}&sortproducts=&ib_entity=llc#show";
             return string.Format(mainUrl, exchange.Code.ToLower(), exchange.Category.ToUpper(), sequence);
         }
+
+        internal static Contract GetForexContract(HtmlNode row)
+        {
+            var cells = row.Descendants("td").ToList();
+
+            var conId = Regex.Match(cells[1].InnerHtml, "^.*conid=(.*?)'.*$").Groups[1].Value;
+            var currency = cells[3].InnerText;
+            var description = cells[1].InnerText;
+            var exchangeCode = "IDEALFX";
+            var ibSymbol = cells[0].InnerText;
+            var symbol = cells[2].InnerText;
+
+            var contract = new Contract
+            {
+                Category = "FOREX",
+                ContractId = conId,
+                Currency = currency,
+                Description = description,
+                ExchangeCode = exchangeCode,
+                IbSymbol = ibSymbol,
+                Symbol = symbol
+            };
+            return contract;
+        }
+
     }
 }

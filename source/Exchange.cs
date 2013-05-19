@@ -43,10 +43,11 @@ namespace IbContractExtractor
             return string.Format("{0}|{1}|{2}|{3}", Category, Code, Name, Link);
         }
 
-        public static List<Exchange> GetList(string source)
+        public static List<Exchange> GetList(string source, string contractType)
         {
             // grab all the links from the source, using HtmlAgilityPack and Linq
             doc = Util.HtmlWebInstance.Load(source);
+
             var links = GetLinks();
 
             // parse out information about the exchange from the link.
@@ -60,8 +61,15 @@ namespace IbContractExtractor
         private static IEnumerable<HtmlNode> GetLinks()
         {
             // use Linq on the document to pull out all the html links with "trading" in the name
-            return doc.DocumentNode.Descendants("a")
-                .Where(e => e.Attributes.Contains("href") && e.Attributes["href"].Value.StartsWith("trading"));
+            var links = doc.DocumentNode.Descendants("a")
+                            .Where(e => e.Attributes.Contains("href") && e.Attributes["href"].Value.StartsWith("trading"));
+
+            return links;
+        }
+
+        internal static string GetHeader()
+        {
+            return "Category|ExchangeCode|ExchangeName|ExchangeLink";
         }
     }
 }

@@ -49,6 +49,7 @@ namespace IbContractExtractor
         {
             // set the Accept header. IB is cranky about this. Get 400 Bad Request errors without it
             request.Accept = "text/html, application/xhtml+xml, */*";
+
             totalRequests++; // keep track of how many pages have been requested
             CurrentRequests++;
 
@@ -58,26 +59,19 @@ namespace IbContractExtractor
         /// <summary>
         /// Writes a list to a file. Assumes object T has overriden ToString().
         /// </summary>
-        public static void WriteToFile<T>(string filename, List<T> list, bool append = false)
+        public static void WriteToFile<T>(string filename, List<T> list)
         {
-            using (StreamWriter writer = new StreamWriter(filename, append))
+            using (StreamWriter writer = new StreamWriter(filename, true))
             {
                 list.ForEach(i => writer.WriteLine(i));
             }
         }
 
-        internal static void InitFile(string filename, string header)
+        public static void InitFile(string filename, string header)
         {
-            try
+            using (StreamWriter writer = new StreamWriter(filename, false))
             {
-                using (StreamWriter writer = new StreamWriter(filename, false))
-                {
-                    writer.WriteLine(header);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Instance.WriteError(ex.Message);
+                writer.WriteLine(header);
             }
         }
     }
