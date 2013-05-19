@@ -17,10 +17,10 @@ Installation
 	Installing IbContractExtractor is just a matter of unzipping the download 
 	file to wherever you want to install it.
 	
-Running IBController
+Running
 ----------------------------
 
-	Start IBController via the command line. 
+	Start via the command line. 
 	
 	Example:
 	c:\unzip path\>IbExtract.exe
@@ -31,7 +31,7 @@ Running IBController
 	2.  Writes a list of contract id's and details to:
       c:\unzip path\contracts.txt
 
-Building IBController
+Building
 -----------------------------
 
 	The project is built with VisualStudio 2010. 
