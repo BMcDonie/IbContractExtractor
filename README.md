@@ -21,7 +21,7 @@ Running
 =======
 
 	Start via the command line. 
-```	bash
+
 	Example:
 	c:\unzip path\>IbExtract.exe
 
@@ -30,7 +30,6 @@ Running
 
 	2.  Writes a list of contract id's and details to:
     c:\unzip path\contracts.txt
-``` bash
 
 Building
 ========
