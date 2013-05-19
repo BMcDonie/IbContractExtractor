@@ -12,27 +12,28 @@ with around 216,000 contracts. There are about 224 exchanges, 2450 pages to down
 The author is Shane Castle (shane.castle@vaultic.com).
 	  
 Installation
-----------------------------
+============
 
 	Installing IbContractExtractor is just a matter of unzipping the download 
 	file to wherever you want to install it.
 	
 Running
-----------------------------
+=======
 
 	Start via the command line. 
-	
+```	bash
 	Example:
 	c:\unzip path\>IbExtract.exe
 
 	1. Writes out a list of exchanges to:
-      c:\unzip path\exchanges.txt
+    c:\unzip path\exchanges.txt
 
 	2.  Writes a list of contract id's and details to:
-      c:\unzip path\contracts.txt
+    c:\unzip path\contracts.txt
+``` bash
 
 Building
------------------------------
+========
 
 	The project is built with VisualStudio 2010. 
 	It should compile with command line tools, but I haven't tested that.
@@ -43,5 +44,5 @@ Building
 	Just open the .sln file and compile as normal.
 
 Notes
------------------------------
+=====
 	Moved to GitHub from SourceForge in May 2013.
