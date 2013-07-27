@@ -35,6 +35,10 @@ namespace IbContractExtractor
             Link = string.Format("{0}{1}", "http://www.interactivebrokers.com/en/", source.Attributes["href"].Value);
             Name = source.InnerText;
             Category = Regex.Match(Link, "showcategories=(.*)&").Groups[1].Value;
+            if (string.IsNullOrEmpty(Category))
+            {
+                Category = "ETF";
+            }
             Code = Regex.Match(Link, "exch=(.*?)&").Groups[1].Value.ToUpper();
         }
 
