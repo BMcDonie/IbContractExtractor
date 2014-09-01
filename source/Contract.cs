@@ -88,6 +88,12 @@ namespace IbContractExtractor
                     Logger.Instance.WriteInfo(" ... {0}", index);
 
                     index += 100;
+                    if (exchange.Category.Equals("ETF"))
+                    {
+                        complete = true;
+                        // Note, do not loop if ETF as all ETFs are shown on one page
+                        continue;
+                    }
                 }
             }
 
@@ -113,8 +119,16 @@ namespace IbContractExtractor
 
         private static string GetUrl(Exchange exchange, int sequence)
         {
-            string mainUrl = "http://www.interactivebrokers.com/en/trading/exchanges.php?exch={0}&showcategories={1}&showproducts=&sequence_idx={2}&sortproducts=&ib_entity=llc#show";
-            return string.Format(mainUrl, exchange.Code.ToLower(), exchange.Category.ToUpper(), sequence);
+             if (exchange.Category.Equals("ETF"))
+            {
+                string mainUrl = "http://www.interactivebrokers.com/en/trading/etfs.php?exch={0}&ib_entity=llc#show";
+                return string.Format(mainUrl, exchange.Code.ToLower());
+            }
+            else
+            {
+                string mainUrl = "http://www.interactivebrokers.com/en/trading/exchanges.php?exch={0}&showcategories={1}&showproducts=&sequence_idx={2}&sortproducts=&ib_entity=llc#show";
+                return string.Format(mainUrl, exchange.Code.ToLower(), exchange.Category.ToUpper(), sequence);
+            }
         }
 
         internal static Contract GetForexContract(HtmlNode row)
