@@ -52,7 +52,7 @@ namespace IbContractExtractor
             GetIndices();
 
             //GetMetals();
-            //GetExchangeTradedFunds();
+            GetExchangeTradedFunds();
 
             //// The products below are listed on the site but don't have contract id information
 
