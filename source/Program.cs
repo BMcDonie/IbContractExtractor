@@ -50,13 +50,12 @@ namespace IbContractExtractor
             GetSingleStockFutures();
             GetForex();
             GetIndices();
-
-            //GetMetals();
             GetExchangeTradedFunds();
-
+            GetWarrants();
+            
             //// The products below are listed on the site but don't have contract id information
 
-            //// GetWarrants(); // no contract id info on website
+            //// GetMetals();
             //// GetStructuredProducts(); // no contract id info on website
             //// GetBonds(); // not implemented - no contract id info on ib website
             //// GetFunds(); // not implemented - no contract id's, just prospectus info
@@ -103,7 +102,7 @@ namespace IbContractExtractor
                 Util.CurrentRequests = 0; // reset
             }
 
-            Logger.Instance.WriteInfo("Exctracted {0} exchanges. Total web pages requested: {1}",
+            Logger.Instance.WriteInfo("Extracted {0} exchanges. Total web pages requested: {1}",
                 exchanges.Count(), Util.TotalRequests);
         }
 
@@ -187,6 +186,14 @@ namespace IbContractExtractor
         private static void GetWarrants()
         {
             // no warrant contract info on IB website
+            // Populate List in order to track Tickers that trade Warrants
+            var contractType = "WARRANTS";
+            var urls = new List<string>();
+            urls.Add("http://www.interactivebrokers.com/en/index.php?f=products&p=war");        // north american warrants (no symbols)
+            urls.Add("http://www.interactivebrokers.com/en/index.php?f=products&p=europe_war"); // european warrants (no symbols)
+            urls.Add("http://www.interactivebrokers.com/en/index.php?f=products&p=asia_war");   // asian warrants (no symbols)
+
+            GetContracts(urls, contractType);
 
             throw new NotImplementedException();
         }
