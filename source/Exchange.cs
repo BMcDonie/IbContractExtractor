@@ -34,12 +34,14 @@ namespace IbContractExtractor
         {
             Link = string.Format("{0}{1}", "http://www.interactivebrokers.com/en/", source.Attributes["href"].Value);
             Name = source.InnerText;
-            Category = Regex.Match(Link, "showcategories=(.*)&").Groups[1].Value;
+            Category = Regex.Match(Link, "showcategories=(.*)").Groups[1].Value.ToUpper();
+            Code = Regex.Match(Link, "exch=(.*?)&").Groups[1].Value.ToUpper();
+            // ETF page still uses trading without a showcategories
             if (string.IsNullOrEmpty(Category))
             {
-                Category = "ETF";
+                Category = Regex.Match(Link, "trading/(.*?)s.php").Groups[1].Value.ToUpper();
+                Code = Regex.Match(Link, "exch=(.*)").Groups[1].Value.ToUpper();
             }
-            Code = Regex.Match(Link, "exch=(.*?)&").Groups[1].Value.ToUpper();
         }
 
         public override string ToString()
@@ -64,10 +66,24 @@ namespace IbContractExtractor
 
         private static IEnumerable<HtmlNode> GetLinks()
         {
-            // use Linq on the document to pull out all the html links with "trading" in the name
+            // use Linq on the document to pull out all the html links with "index.php?f=2222" in the name
             var links = doc.DocumentNode.Descendants("a")
-                            .Where(e => e.Attributes.Contains("href") && e.Attributes["href"].Value.StartsWith("trading"));
+                            .Where(e => e.Attributes.Contains("href") && e.Attributes["href"].Value.StartsWith("index.php?f=2222"));
+            // Check if empty (also catches FX where there is only 1 page and that's the reason for the additional check on line 78)
+            if (!links.Any())
+                {
+                    // use Linq on the document to pull out all the html links with "trading" in the name (ETFs)
+                    var links2 = doc.DocumentNode.Descendants("a")
+                                .Where(e => e.Attributes.Contains("href") && e.Attributes["href"].Value.StartsWith("trading"));
+                    if (!links2.Any())
+                    {
+                        var links3 = doc.DocumentNode.Descendants("a")
+                                .Where(e => e.Attributes.Contains("href") && e.Attributes["href"].Value.StartsWith("index.php?f=2222"));
+                        return links3;
+                    }
+                    return links2;
 
+                }
             return links;
         }
 
