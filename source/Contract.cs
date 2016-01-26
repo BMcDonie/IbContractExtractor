@@ -126,7 +126,7 @@ namespace IbContractExtractor
             }
             else
             {
-                string mainUrl = "http://www.interactivebrokers.com/en/trading/exchanges.php?exch={0}&showcategories={1}&showproducts=&sequence_idx={2}&sortproducts=&ib_entity=llc#show";
+                string mainUrl = "https://www.interactivebrokers.com/en/index.php?f=2222&exch={0}&showcategories={1}&showproducts=&sequence_idx={2}&sortproducts=&ib_entity=llc#show";
                 return string.Format(mainUrl, exchange.Code.ToLower(), exchange.Category.ToUpper(), sequence);
             }
         }
