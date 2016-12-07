@@ -65,7 +65,7 @@ namespace IbContractExtractor
         public static List<Contract> GetList(Exchange exchange)
         {
             List<Contract> contracts = new List<Contract>();
-            int index = 100;
+            int index = 1;
             complete = false;
 
             while (!complete)
@@ -87,7 +87,7 @@ namespace IbContractExtractor
 
                     Logger.Instance.WriteInfo(" ... {0}", index);
 
-                    index += 100;
+                    index += 1;
                     if (exchange.Category.Equals("ETF"))
                     {
                         complete = true;
@@ -121,12 +121,12 @@ namespace IbContractExtractor
         {
              if (exchange.Category.Equals("ETF"))
             {
-                string mainUrl = "http://www.interactivebrokers.com/en/trading/etfs.php?exch={0}&ib_entity=llc#show";
+                string mainUrl = "http://www.interactivebrokers.com/en/index.php?f=567&exch={0}";
                 return string.Format(mainUrl, exchange.Code.ToLower());
             }
             else
             {
-                string mainUrl = "https://www.interactivebrokers.com/en/index.php?f=2222&exch={0}&showcategories={1}&showproducts=&sequence_idx={2}&sortproducts=&ib_entity=llc#show";
+                string mainUrl = "https://www.interactivebrokers.com/en/index.php?f=2222&exch={0}&showcategories={1}&p=&cc=&limit=100&page={2}";
                 return string.Format(mainUrl, exchange.Code.ToLower(), exchange.Category.ToUpper(), sequence);
             }
         }
